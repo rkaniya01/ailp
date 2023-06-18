@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import * as React from 'react';
 
 import ArrowLink from '@/components/links/ArrowLink';
@@ -15,7 +16,55 @@ import Seo from '@/components/Seo';
 // Before you begin editing, follow all comments with `STARTERCONF`,
 // to customize the default configuration.
 
+async function getArtistAlbums(email: any, password: any) {
+  const url = 'https://ailp-server.onrender.com/users/login';
+  // const res = await fetch(`https://ailp-server.onrender.com/users/login`);
+  const res = await fetch(url, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify({
+      email: email,
+      password: password,
+    }), // body data type must match "Content-Type" header
+  });
+
+  return res.json();
+}
+
 export default function LoginPage() {
+  const router = useRouter();
+
+  // React.useEffect(() => {
+  async function fetchData(email: any, password: any) {
+    try {
+      const res = await getArtistAlbums(email, password);
+      if (res.status !== 'failed') {
+        router.push('/');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  // fetchData(email, password);
+  // }, []);
+
+  const handleClick = (e: any) => {
+    e.preventDefault();
+
+    console.log(e.target[0].value);
+    console.log(e.target[1].value);
+    const email = e.target[0].value;
+    const password = e.target[1].value;
+    fetchData(email, password);
+  };
+
   return (
     <>
       {/* <Seo templateTitle='Home' /> */}
@@ -27,13 +76,14 @@ export default function LoginPage() {
             <h1 className='mb-6 text-center text-3xl font-semibold'>
               Login to AILP
             </h1>
-            <form className='space-y-4'>
+            <form className='space-y-4' onSubmit={handleClick}>
               <div>
                 <label className='label'>
                   <span className='label-text text-base'>Email</span>
                 </label>
                 <input
                   type='text'
+                  name='email'
                   placeholder='Email Address'
                   className='input input-bordered input-primary w-full'
                 />
@@ -44,6 +94,7 @@ export default function LoginPage() {
                 </label>
                 <input
                   type='password'
+                  name='password'
                   placeholder='Enter Password'
                   className='input input-bordered input-primary w-full'
                 />
@@ -55,7 +106,9 @@ export default function LoginPage() {
                 Forget Password?
               </a>
               <div>
-                <button className='btn btn-primary'>Login</button>
+                <button className='btn btn-primary' type='submit'>
+                  Login
+                </button>
               </div>
             </form>
             <div className='w-fill flex'>
