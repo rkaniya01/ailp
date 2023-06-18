@@ -2,8 +2,8 @@ import * as React from 'react';
 import { useState } from 'react';
 
 import Layout from '@/components/layout/Layout';
-import { Salaries } from '@/components/Salaries';
 import Seo from '@/components/Seo';
+import { Trending } from '@/components/Trending';
 
 /**
  * SVGR Support
@@ -20,9 +20,34 @@ import Seo from '@/components/Seo';
 interface CardProps {
   items: string[];
 }
+
+async function getArtistAlbums() {
+  const res = await fetch(
+    `https://ailp-server.onrender.com/blog/trending-blogs`
+  );
+  console.log('🚀 ~ getArtistAlbums ~ res  ( ~_~ )   ::', res);
+  // console.log('🚀 ~ getArtistAlbums ~ res  ( ~_~ )   ::', res.data);
+  return res.json();
+}
+
 export default function HomePage() {
   const [showAll, setShowAll] = useState(false);
   const items = ['tri', 'tri', 'tri', 'trisd'];
+
+  const [treandingData, setTreandingData] = useState<any>();
+
+  React.useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await getArtistAlbums();
+        console.log('🚀 ~ HomePage ~ resss  ( ~_~ )   ::', res.data);
+        setTreandingData(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchData();
+  }, []);
 
   const displayedItems = showAll ? items : items.slice(0, 3);
 
@@ -32,7 +57,6 @@ export default function HomePage() {
 
   return (
     <Layout>
-      {/* <Seo templateTitle='Home' /> */}
       <Seo />
 
       <main>
@@ -56,7 +80,7 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          <Salaries />
+          <Trending trendingData={treandingData} />
           <div className='h-40' />
         </section>
       </main>
