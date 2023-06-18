@@ -52,5 +52,31 @@ export default {
       },
     },
   },
-  plugins: [require('@tailwindcss/forms')],
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+          primary: '#96e4f2',
+
+          secondary: '#542caa',
+
+          accent: '#d7c6ff',
+
+          neutral: '#2d2438',
+
+          'base-100': '#f7f7f8',
+
+          info: '#8ea1eb',
+
+          success: '#289f67',
+
+          warning: '#f29718',
+
+          error: '#f56b77',
+        },
+      },
+    ],
+  },
+
+  plugins: [require('@tailwindcss/forms'), require('daisyui')],
 } satisfies Config;

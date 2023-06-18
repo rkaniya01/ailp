@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useState } from 'react';
 
+import { Interviews } from '@/components/Interviews';
 import Layout from '@/components/layout/Layout';
-import { Salaries } from '@/components/Salaries';
 import Seo from '@/components/Seo';
 
 /**
@@ -40,11 +40,11 @@ export default function HomePage() {
           <div className='hero mb-56 h-96 pt-20	'>
             <div className='hero-content flex-col lg:flex-row-reverse'>
               <img
-                src='https://res.cloudinary.com/dbpfhcujh/image/upload/v1686987395/hackathon/undraw_transfer_money_re_6o1h_rgiqmw.svg'
+                src='https://res.cloudinary.com/dbpfhcujh/image/upload/v1687007203/hackathon/undraw_interview_re_e5jn_hdkish.svg'
                 className='max-w-sm '
               />
               <div>
-                <h1 className='text-5xl font-bold'>Trending page!</h1>
+                <h1 className='text-5xl font-bold'>Interview Experiences!</h1>
                 <p className='py-6'>
                   Discover companies tailored to your salary expectations. Use
                   our powerful salary filter to refine your job search and find
@@ -56,7 +56,7 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          <Salaries />
+          <Interviews />
           <div className='h-40' />
         </section>
       </main>

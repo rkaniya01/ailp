@@ -44,7 +44,9 @@ export default function HomePage() {
                 className='max-w-sm '
               />
               <div>
-                <h1 className='text-5xl font-bold'>Trending page!</h1>
+                <h1 className='text-5xl font-bold'>
+                  Salary Filter: Find Your Ideal Pay Scale!
+                </h1>
                 <p className='py-6'>
                   Discover companies tailored to your salary expectations. Use
                   our powerful salary filter to refine your job search and find
