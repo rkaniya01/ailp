@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 
 import Layout from '@/components/layout/Layout';
-import { Salaries } from '@/components/Salaries';
+import { Blogs } from '@/components/Blogs';
 import Seo from '@/components/Seo';
 
 /**
@@ -20,8 +20,15 @@ import Seo from '@/components/Seo';
 interface CardProps {
   items: string[];
 }
+
+async function getArtistAlbums() {
+  const res = await fetch(`https://ailp-server.onrender.com/blog`);
+  return res.json();
+}
+
 export default function HomePage() {
   const [showAll, setShowAll] = useState(false);
+  const [blogData, setBlogData] = useState([]);
   const items = ['tri', 'tri', 'tri', 'trisd'];
 
   const displayedItems = showAll ? items : items.slice(0, 3);
@@ -29,6 +36,19 @@ export default function HomePage() {
   const handleShowMore = () => {
     setShowAll(true);
   };
+
+  React.useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await getArtistAlbums();
+        console.log('🚀 ~ HomePage ~ resss  ( ~_~ )   ::', res.data);
+        setBlogData(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchData();
+  }, []);
 
   return (
     <Layout>
@@ -46,17 +66,14 @@ export default function HomePage() {
               <div>
                 <h1 className='text-5xl font-bold'>Blogs page!</h1>
                 <p className='py-6'>
-                  Discover companies tailored to your salary expectations. Use
-                  our powerful salary filter to refine your job search and find
-                  the perfect match for your financial goals.
+                  Discover blog blog, improve leaning, keep growing, keep
+                  improving
                 </p>
-                <button className='btn btn-primary'>
-                  Find Salary-Matched Companies!
-                </button>
+                <button className='btn btn-primary'>Find Blog</button>
               </div>
             </div>
           </div>
-          <Salaries />
+          <Blogs blogData={blogData} />
           <div className='h-40' />
         </section>
       </main>
