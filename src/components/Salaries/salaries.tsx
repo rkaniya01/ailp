@@ -2,7 +2,7 @@ import React from 'react';
 
 import { CompaniesList } from '@/components/CompaniesList';
 
-export const Salaries = () => {
+export const Salaries = ({ salariesData }: any) => {
   // return <div className=' mx-auto max-w-screen-xl	 bg-black'>Testing</div>;
   return (
     <div className='card lg:card-side bg-base-100 mx-auto max-w-screen-xl shadow-xl'>
@@ -13,7 +13,7 @@ export const Salaries = () => {
           Your Ideal Career.
         </p>
         <div className='card-actions justify-end '>
-          <CompaniesList />
+          <CompaniesList salariesData={salariesData} />
         </div>
       </div>
     </div>

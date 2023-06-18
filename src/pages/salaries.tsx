@@ -20,12 +20,31 @@ import Seo from '@/components/Seo';
 interface CardProps {
   items: string[];
 }
+
+async function getArtistAlbums() {
+  const res = await fetch(`https://ailp-server.onrender.com/salary`);
+  return res.json();
+}
+
 export default function HomePage() {
   const [showAll, setShowAll] = useState(false);
+  const [salariesData, setSalariesData] = useState<any>();
   const items = ['tri', 'tri', 'tri', 'trisd'];
 
   const displayedItems = showAll ? items : items.slice(0, 3);
 
+  React.useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await getArtistAlbums();
+        console.log('🚀 ~ HomePage ~ resss  ( ~_~ )   ::', res.data);
+        setSalariesData(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchData();
+  }, []);
   const handleShowMore = () => {
     setShowAll(true);
   };
@@ -58,7 +77,7 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          <Salaries />
+          <Salaries salariesData={salariesData} />
           <div className='h-40' />
         </section>
       </main>
