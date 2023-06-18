@@ -20,8 +20,15 @@ import Seo from '@/components/Seo';
 interface CardProps {
   items: string[];
 }
+
+async function getArtistAlbums() {
+  const res = await fetch(`https://ailp-server.onrender.com/interview-experience`);
+  return res.json();
+}
+
 export default function HomePage() {
   const [showAll, setShowAll] = useState(false);
+  const [interviewData, setInterviewData] = useState([]);
   const items = ['tri', 'tri', 'tri', 'trisd'];
 
   const displayedItems = showAll ? items : items.slice(0, 3);
@@ -29,6 +36,20 @@ export default function HomePage() {
   const handleShowMore = () => {
     setShowAll(true);
   };
+
+  React.useEffect(() => {
+    async function fetchData() {
+      console.log('Helllo');
+      try {
+        const res = await getArtistAlbums();
+        console.log('🚀 ~ HomePage ~ resss  ( ~_~ )   ::', res.data);
+        setInterviewData(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchData();
+  }, []);
 
   return (
     <Layout>
@@ -56,7 +77,7 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          <Interviews />
+          <Interviews interviewData={interviewData} />
           <div className='h-40' />
         </section>
       </main>

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { InterviewsList } from '@/components/InterviewsList';
 
-export const Interviews = () => {
+export const Interviews = ({ interviewData }: any) => {
   // return <div className=' mx-auto max-w-screen-xl	 bg-black'>Testing</div>;
   return (
     <div className='card lg:card-side bg-base-100 mx-auto max-w-screen-xl shadow-xl'>
@@ -13,7 +13,7 @@ export const Interviews = () => {
           Your Ideal Career.
         </p>
         <div className='card-actions justify-end '>
-          <InterviewsList />
+          <InterviewsList interviewData={interviewData} />
         </div>
       </div>
     </div>
